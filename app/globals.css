@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  .text-primary-500 {
+    @apply text-[#FF7000];
+  }
   .background-light850_dark100 {
     @apply bg-light-850 dark:bg-dark-100;
   }
@@ -284,5 +287,11 @@
       rgba(23, 28, 35, 0.41) 0%,
       rgba(19, 22, 28, 0.7) 100%
     );
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
   }
 }
