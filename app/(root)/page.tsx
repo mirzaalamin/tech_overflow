@@ -1,6 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 
-export default function Home() {
+import { auth } from "@/auth";
+
+const Home = async () => {
+  const session = await auth();
+  console.log(session);
   return (
     <>
       <h2 className="text-3xl font-inter font-bold">
@@ -8,4 +12,6 @@ export default function Home() {
       </h2>
     </>
   );
-}
+};
+
+export default Home;
