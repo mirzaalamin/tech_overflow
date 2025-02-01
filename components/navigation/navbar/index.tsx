@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Theme from "./Theme";
+import MobileNavigation from "./mobileNavigation";
 
 /* eslint-disable react/react-in-jsx-scope */
 const Navbar = () => {
@@ -20,8 +21,9 @@ const Navbar = () => {
 
       <p>Global Search bar</p>
 
-      <div>
+      <div className="flex-between gap-5">
         <Theme />
+        <MobileNavigation />
       </div>
     </div>
   );
