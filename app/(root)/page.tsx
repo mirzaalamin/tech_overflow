@@ -8,6 +8,7 @@ const Home = async () => {
   console.log(session);
   return (
     <>
+      <h2>Welcome to the NEXT js world!</h2>
       <form
         action={async () => {
           "use server";
