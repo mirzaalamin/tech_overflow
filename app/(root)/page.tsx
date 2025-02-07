@@ -1,5 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 
+import QuestionCard from "@/components/cards/QuestionCard";
+import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
@@ -7,64 +9,61 @@ import Link from "next/link";
 
 const questions = [
   {
-    _id: "q1",
-    title: "How does JavaScript handle asynchronous operations?",
+    _id: "1",
+    title: "How to learn React?",
+    description: "I want to learn React, can anyone help me?",
+    tags: [
+      { _id: "1", name: "React" },
+      { _id: "2", name: "Next js" },
+    ],
     author: {
-      _id: "a1",
+      _id: "1",
       name: "John Doe",
+      image:
+        "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
-    tags: ["JavaScript", "Async", "Promises"],
-    upvote: 25,
-    views: 150,
-    answere: 48,
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date("2025-2-5"),
   },
   {
-    _id: "q2",
-    title: "What are the benefits of using React for front-end development?",
+    _id: "2",
+    title: "How to learn JavaScript?",
+    description: "I want to learn JavaScript, can anyone help me?",
+    tags: [
+      { _id: "1", name: "JavaScript" },
+      { _id: "2", name: "angular" },
+    ],
     author: {
-      _id: "a2",
-      name: "Alice Smith",
+      _id: "1",
+      name: "John Doe",
+      image:
+        "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
-    tags: ["React", "Front-End", "JavaScript"],
-    upvote: 40,
-    views: 230,
-    answere: 43,
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date("2024-09-01"),
   },
   {
-    _id: "q3",
-    title: "How can I optimize database queries in MongoDB?",
+    _id: "3",
+    title: "How to learn Redux in simple steps?",
+    description: "I want to learn Redux toolkit, can anyone help me?",
+    tags: [
+      { _id: "1", name: "Redux" },
+      { _id: "2", name: "Toolkit" },
+    ],
     author: {
-      _id: "a3",
-      name: "David Johnson",
+      _id: "1",
+      name: "Mirza",
+      image:
+        "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
-    tags: ["MongoDB", "Database", "Optimization"],
-    upvote: 18,
-    views: 90,
-    answere: 34,
-  },
-  {
-    _id: "q4",
-    title: "What is the difference between HTTP and HTTPS?",
-    author: {
-      _id: "a4",
-      name: "Emma Brown",
-    },
-    tags: ["Networking", "Security", "Web"],
-    upvote: 35,
-    views: 180,
-    answere: 197,
-  },
-  {
-    _id: "q5",
-    title: "How does machine learning improve search engine results?",
-    author: {
-      _id: "a5",
-      name: "Michael Lee",
-    },
-    tags: ["Machine Learning", "AI", "Search Engine"],
-    upvote: 50,
-    views: 300,
-    answere: 55,
+    upvotes: 10,
+    answers: 5,
+    views: 100,
+    createdAt: new Date("2024-03-01"),
   },
 ];
 
@@ -73,11 +72,18 @@ interface SearchParams {
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
-  const filteredQuestions = questions.filter((question) =>
-    question.title.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredQuestions = questions.filter((question) => {
+    const mathesQuery = question.title
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const mathesFilter = filter
+      ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+
+    return mathesQuery && mathesFilter;
+  });
   return (
     <>
       <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -97,12 +103,10 @@ const Home = async ({ searchParams }: SearchParams) => {
           otherClasses=""
         />
       </section>
-      Filter
+      <HomeFilter />
       <section className="mt-10 flex w-full flex-col gap-6">
-        {filteredQuestions.map(({ _id, title }) => (
-          <p key={_id} className="text-2xl">
-            {title}
-          </p>
+        {filteredQuestions.map((question) => (
+          <QuestionCard key={question._id} question={question} />
         ))}
       </section>
     </>
