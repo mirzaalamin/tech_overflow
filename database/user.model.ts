@@ -1,4 +1,4 @@
-import { model, models, Schema } from "mongoose";
+import { Document, model, models, Schema } from "mongoose";
 
 export interface IUser {
   _id: string;
@@ -13,6 +13,8 @@ export interface IUser {
   reputation?: number;
   joinedAt: Date;
 }
+
+export interface IUserDoc extends IUser, Document {}
 
 const UserSchema = new Schema<IUser>(
   {
