@@ -1,4 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
+import logger from "./logger";
 
 const MONGODB_URI = process.env.MONGODDB_URI;
 
@@ -24,6 +25,7 @@ if (!cached) {
 
 const dbConnect = async (): Promise<Mongoose> => {
   if (cached.conn) {
+    logger.info("Connected to the existing mongoDB database");
     return cached.conn;
   }
 
@@ -33,11 +35,11 @@ const dbConnect = async (): Promise<Mongoose> => {
         dbName: "techoverflow",
       })
       .then((result) => {
-        console.log("Database connection Established");
+        logger.info("Connected to MongoDB");
         return result;
       })
       .catch((error) => {
-        console.log("Error connecting to MongoDB", error);
+        logger.error("Error connecting to MongoDB", error);
         throw error;
       });
   }
