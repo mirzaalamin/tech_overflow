@@ -55,7 +55,7 @@ export async function PUT(
   try {
     await dbConnect();
     const body = await request.json();
-    const validatedData = AccountSchema.safeParse(body);
+    const validatedData = AccountSchema.partial().safeParse(body);
 
     if (!validatedData.success)
       throw new ValidationError(validatedData.error.flatten().fieldErrors);
