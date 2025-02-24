@@ -27,7 +27,6 @@ export async function POST(request: Request) {
     const validatedData = UserSchema.safeParse(body);
 
     if (!validatedData.success) {
-      console.log("hoy nai");
       throw new ValidationError(validatedData.error.flatten().fieldErrors);
     }
 
