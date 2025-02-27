@@ -5,6 +5,8 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
+import handleError from "@/lib/handlers/error";
 import Link from "next/link";
 
 const questions = [
@@ -22,9 +24,9 @@ const questions = [
       image:
         "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
-    upvotes: 10,
-    answers: 5,
-    views: 100,
+    upvotes: 23,
+    answers: 72,
+    views: 980,
     createdAt: new Date("2025-2-5"),
   },
   {
@@ -60,18 +62,28 @@ const questions = [
       image:
         "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
     },
-    upvotes: 10,
-    answers: 5,
-    views: 100,
+    upvotes: 110,
+    answers: 90,
+    views: 1100,
     createdAt: new Date("2024-03-01"),
   },
 ];
+
+const test = async () => {
+  try {
+    return await api.users.getAll();
+  } catch (error) {
+    return handleError(error) as ActionResponse;
+  }
+};
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 
 const Home = async ({ searchParams }: SearchParams) => {
+  const users = await test();
+  console.log(users);
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {
