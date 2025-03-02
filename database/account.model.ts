@@ -1,21 +1,19 @@
 import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface IAccount {
-  _id: string;
+  _id?: Types.ObjectId;
   userId: Types.ObjectId;
-  user: string;
   name: string;
-  password?: string;
   image?: string;
+  password?: string;
   provider: string;
   providerAccountId: string;
 }
 
 export interface IAccountDoc extends IAccount, Document {}
-
 const AccountSchema = new Schema<IAccount>(
   {
-    _id: { type: String, required: true, unique: true },
+    _id: { type: Schema.Types.ObjectId },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     name: { type: String, required: true },
     image: { type: String },
@@ -26,6 +24,6 @@ const AccountSchema = new Schema<IAccount>(
   { timestamps: true }
 );
 
-const Account = models.Account || model<IAccount>("Account", AccountSchema);
+const Account = models?.Account || model<IAccount>("Account", AccountSchema);
 
 export default Account;
