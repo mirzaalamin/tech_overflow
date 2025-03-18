@@ -1,6 +1,6 @@
 "use client";
 
-import { formUrlQuery, removeKeysFromQueryUrl } from "@/lib/url";
+import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ const LocalSearch = ({ route, imgSrc, placeholder, otherClasses }: Props) => {
         router.push(newUrl, { scroll: false });
       } else {
         if (pathname === route) {
-          const newUrl = removeKeysFromQueryUrl({
+          const newUrl = removeKeysFromUrlQuery({
             params: searchParams.toString(),
             keysToRemove: ["query"],
           });

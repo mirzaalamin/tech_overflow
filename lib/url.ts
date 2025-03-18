@@ -1,17 +1,19 @@
 import qs from "query-string";
 
-interface urlQueryParams {
+interface UrlQueryParams {
   params: string;
   key: string;
   value: string;
 }
-interface removeKeysFromQueryParams {
+
+interface RemoveUrlQueryParams {
   params: string;
   keysToRemove: string[];
 }
 
-export const formUrlQuery = ({ params, key, value }: urlQueryParams) => {
+export const formUrlQuery = ({ params, key, value }: UrlQueryParams) => {
   const queryString = qs.parse(params);
+
   queryString[key] = value;
 
   return qs.stringifyUrl({
@@ -20,10 +22,10 @@ export const formUrlQuery = ({ params, key, value }: urlQueryParams) => {
   });
 };
 
-export const removeKeysFromQueryUrl = ({
+export const removeKeysFromUrlQuery = ({
   params,
   keysToRemove,
-}: removeKeysFromQueryParams) => {
+}: RemoveUrlQueryParams) => {
   const queryString = qs.parse(params);
 
   keysToRemove.forEach((key) => {

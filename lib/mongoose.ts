@@ -1,10 +1,11 @@
 import mongoose, { Mongoose } from "mongoose";
+
 import logger from "./logger";
 
-const MONGODB_URI = process.env.MONGODDB_URI;
+const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error("MongoDB connection string is not defined");
+  throw new Error("MONGODB_URI is not defined");
 }
 
 interface MongooseCache {
@@ -25,7 +26,7 @@ if (!cached) {
 
 const dbConnect = async (): Promise<Mongoose> => {
   if (cached.conn) {
-    logger.info("Connected to the existing mongoDB database");
+    logger.info("Using existing mongoose connection");
     return cached.conn;
   }
 
@@ -45,6 +46,7 @@ const dbConnect = async (): Promise<Mongoose> => {
   }
 
   cached.conn = await cached.promise;
+
   return cached.conn;
 };
 

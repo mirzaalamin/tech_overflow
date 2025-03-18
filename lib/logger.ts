@@ -16,7 +16,6 @@ const logger = pino({
           },
         }
       : undefined,
-
   formatters: {
     level: (label) => ({ level: label.toUpperCase() }),
   },

@@ -1,13 +1,15 @@
 "use server";
 
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+
 import { signIn } from "@/auth";
 import Account from "@/database/account.model";
 import User from "@/database/user.model";
-import { ErrorResponse } from "@/types/global";
-import bcrypt from "bcryptjs";
-import mongoose from "mongoose";
+
 import action from "../handlers/action";
 import handleError from "../handlers/error";
+import { NotFoundError } from "../http-errors";
 import { SignInSchema, SignUpSchema } from "../validations";
 
 export async function signUpWithCredentials(
@@ -28,7 +30,7 @@ export async function signUpWithCredentials(
     const existingUser = await User.findOne({ email }).session(session);
 
     if (existingUser) {
-      throw new Error("User already exist!");
+      throw new Error("User already exists");
     }
 
     const existingUsername = await User.findOne({ username }).session(session);
@@ -39,17 +41,13 @@ export async function signUpWithCredentials(
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const [newUser] = await User.create(
-      [{ _id: new mongoose.Types.ObjectId(), username, name, email }],
-      {
-        session,
-      }
-    );
+    const [newUser] = await User.create([{ username, name, email }], {
+      session,
+    });
 
     await Account.create(
       [
         {
-          _id: new mongoose.Types.ObjectId(),
           userId: newUser._id,
           name,
           provider: "credentials",
@@ -73,6 +71,7 @@ export async function signUpWithCredentials(
     await session.endSession();
   }
 }
+
 export async function signInWithCredentials(
   params: Pick<AuthCredentials, "email" | "password">
 ): Promise<ActionResponse> {
@@ -87,14 +86,14 @@ export async function signInWithCredentials(
   try {
     const existingUser = await User.findOne({ email });
 
-    if (!existingUser) throw new Error("User not found!");
+    if (!existingUser) throw new NotFoundError("User");
 
     const existingAccount = await Account.findOne({
       provider: "credentials",
       providerAccountId: email,
     });
 
-    if (!existingAccount) throw new Error("Account not found!");
+    if (!existingAccount) throw new NotFoundError("Account");
 
     const passwordMatch = await bcrypt.compare(
       password,

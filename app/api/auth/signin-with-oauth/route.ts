@@ -39,15 +39,7 @@ export async function POST(request: Request) {
 
     if (!existingUser) {
       [existingUser] = await User.create(
-        [
-          {
-            _id: new mongoose.Types.ObjectId(),
-            name,
-            username: slugifiedUsername,
-            email,
-            image,
-          },
-        ],
+        [{ name, username: slugifiedUsername, email, image }],
         { session }
       );
     } else {
@@ -74,7 +66,6 @@ export async function POST(request: Request) {
       await Account.create(
         [
           {
-            _id: new mongoose.Types.ObjectId(),
             userId: existingUser._id,
             name,
             image,

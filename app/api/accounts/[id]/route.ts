@@ -1,13 +1,14 @@
+import { NextResponse } from "next/server";
+
 import Account from "@/database/account.model";
 import handleError from "@/lib/handlers/error";
 import { NotFoundError, ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import { AccountSchema } from "@/lib/validations";
-import { NextResponse } from "next/server";
 
-// GET a single Account by ID /api/accounts/id
+// GET /api/users/[id]
 export async function GET(
-  request: Request,
+  _: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
@@ -25,9 +26,9 @@ export async function GET(
   }
 }
 
-// DELETE user by ID /api/accounts/id
+// DELETE /api/users/[id]
 export async function DELETE(
-  request: Request,
+  _: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
@@ -35,6 +36,7 @@ export async function DELETE(
 
   try {
     await dbConnect();
+
     const account = await Account.findByIdAndDelete(id);
     if (!account) throw new NotFoundError("Account");
 
@@ -44,7 +46,7 @@ export async function DELETE(
   }
 }
 
-// UPDATE user by ID /api/accounts/id
+// PUT /api/users/[id]
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -54,6 +56,7 @@ export async function PUT(
 
   try {
     await dbConnect();
+
     const body = await request.json();
     const validatedData = AccountSchema.partial().safeParse(body);
 
@@ -63,6 +66,8 @@ export async function PUT(
     const updatedAccount = await Account.findByIdAndUpdate(id, validatedData, {
       new: true,
     });
+
+    if (!updatedAccount) throw new NotFoundError("Account");
 
     return NextResponse.json(
       { success: true, data: updatedAccount },
