@@ -14,12 +14,21 @@ interface Author {
 interface Question {
   _id: string;
   title: string;
+  content: string;
   tags: Tag[];
   author: Author;
   createdAt: Date;
   upvote: number;
   answeres: number;
   views: number;
+}
+
+interface PaginatedSearchParams {
+  page?: number;
+  pageSize?: number;
+  query?: string;
+  filter?: string;
+  sort?: string;
 }
 
 type ActionResponse<T = null> = {
