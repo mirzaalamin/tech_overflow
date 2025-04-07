@@ -9,9 +9,9 @@ import { Button } from "../ui/button";
 /* eslint-disable react/react-in-jsx-scope */
 
 const filters = [
-  { name: "React", value: "react" },
-  { name: "Javascript", value: "javascript" },
-  { name: "Redux", value: "redux" },
+  { name: "Popular", value: "popular" },
+  { name: "Unanswered", value: "unanswered" },
+  { name: "Newest", value: "newest" },
 ];
 
 const HomeFilter = () => {
