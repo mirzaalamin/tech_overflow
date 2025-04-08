@@ -1,5 +1,5 @@
 import ROUTES from "@/constants/routes";
-import { getTags } from "@/lib/actions/tags.action";
+import { getTags } from "@/lib/actions/tag.action";
 import Image from "next/image";
 import Link from "next/link";
 import TagCard from "../cards/TagCard";

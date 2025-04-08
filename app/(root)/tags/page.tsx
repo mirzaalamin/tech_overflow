@@ -3,7 +3,7 @@ import DataRenderer from "@/components/DataRenderer";
 import LocalSearch from "@/components/search/LocalSearch";
 import ROUTES from "@/constants/routes";
 import { EMPTY_TAGS } from "@/constants/states";
-import { getTags } from "@/lib/actions/tags.action";
+import { getTags } from "@/lib/actions/tag.action";
 
 /* eslint-disable react/react-in-jsx-scope */
 const Tags = async ({ searchParams }: RouteParams) => {

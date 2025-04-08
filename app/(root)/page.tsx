@@ -90,17 +90,6 @@ const Home = async ({ searchParams }: SearchParams) => {
 
   const { questions } = data || {};
 
-  // const filteredQuestions = questions.filter((question) => {
-  //   const matchesQuery = question.title
-  //     .toLowerCase()
-  //     .includes(query.toLowerCase());
-  //   const mathesFilter = filter
-  //     ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
-  //     : true;
-
-  //   return matchesQuery && mathesFilter;
-  // });
-
   return (
     <>
       <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -134,25 +123,6 @@ const Home = async ({ searchParams }: SearchParams) => {
           </section>
         )}
       />
-      {/* {success ? (
-        <section className="mt-10 flex w-full flex-col gap-6">
-          {questions && questions.length > 0 ? (
-            questions.map((question) => (
-              <QuestionCard key={question._id} question={question} />
-            ))
-          ) : (
-            <div className="mt-10 w-full flex items-center justify-center">
-              <p className="text-dark400_light700">No questions found</p>
-            </div>
-          )}
-        </section>
-      ) : (
-        <div className="mt-10 w-full flex items-center justify-center">
-          <p className="text-dark400_light700">
-            {error?.message || "Failed to fetch questions"}
-          </p>
-        </div>
-      )} */}
     </>
   );
 };
