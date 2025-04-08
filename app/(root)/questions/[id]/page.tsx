@@ -3,11 +3,12 @@ import Preview from "@/components/editor/Preview";
 import Metric from "@/components/Metric";
 import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
-import { getQuestion } from "@/lib/actions/question.action";
+import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams } from "@/types/global";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 
 /* eslint-disable react/react-in-jsx-scope */
 
@@ -16,6 +17,10 @@ const QuestionDetails = async ({ params }: RouteParams) => {
   const { success, data: question } = await getQuestion({ questionId: id });
 
   if (!success || !question) return redirect("/404");
+
+  after(() => {
+    incrementViews({ questionId: id });
+  });
 
   const { author, createdAt, answers, views, tags, title, content } = question;
   return (
