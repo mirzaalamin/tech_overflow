@@ -40,6 +40,7 @@ const QuestionCard = ({
           value={author.name}
           textStyle="small-medium text-dark400_light700"
           isAuthor
+          titleStyles="max-sm:hidden"
         />
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric

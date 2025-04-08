@@ -213,6 +213,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
                           name={tag}
                           remove
                           isButton
+                          compact
                           handleRemove={() => handleTagRemove(tag, field)}
                         />
                       ))}

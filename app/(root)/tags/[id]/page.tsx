@@ -1,6 +1,7 @@
 import QuestionCard from "@/components/cards/QuestionCard";
 import DataRenderer from "@/components/DataRenderer";
 import LocalSearch from "@/components/search/LocalSearch";
+import ROUTES from "@/constants/routes";
 import { EMPTY_QUESTION } from "@/constants/states";
 import { getTagQuestions } from "@/lib/actions/tag.action";
 
@@ -13,7 +14,7 @@ const page = async ({ params, searchParams }: RouteParams) => {
     tagId: id,
     page: Number(page) || 1,
     pageSize: Number(pageSize) || 10,
-    query,
+    query: query || "",
   });
 
   const { tag, questions } = data || {};
@@ -24,7 +25,7 @@ const page = async ({ params, searchParams }: RouteParams) => {
       </section>
       <section className="mt-11">
         <LocalSearch
-          route="/"
+          route={ROUTES.TAG(id)}
           imgSrc="/icons/search.svg"
           placeholder="Search for a Question here..."
           otherClasses=""
