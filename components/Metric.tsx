@@ -12,7 +12,7 @@ interface Props {
   textStyle: string;
   imageStyle: string;
   isAuthor: boolean;
-  textStyles?: string;
+  titleStyles?: string;
 }
 
 const Metric = ({
@@ -24,7 +24,7 @@ const Metric = ({
   isAuthor,
   textStyle,
   imageStyle,
-  textStyles,
+  titleStyles,
 }: Props) => {
   const metricContent = (
     <>
@@ -38,7 +38,7 @@ const Metric = ({
       <p className={`${textStyle} flex item-center gap-1`}>
         {value}
         {title ? (
-          <span className={cn(`small-regular line-clamp-1`, textStyles)}>
+          <span className={cn(`small-regular line-clamp-1`, titleStyles)}>
             {title}
           </span>
         ) : null}

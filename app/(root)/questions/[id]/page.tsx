@@ -1,5 +1,6 @@
 import TagCard from "@/components/cards/TagCard";
 import Preview from "@/components/editor/Preview";
+import AnswerForm from "@/components/forms/AnswerForm";
 import Metric from "@/components/Metric";
 import UserAvatar from "@/components/UserAvatar";
 import ROUTES from "@/constants/routes";
@@ -31,7 +32,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
             <UserAvatar
               id={author._id}
               name={author.name}
-              imageUrl={author.image}
+              imageUrl={author?.image}
               className="size-[22px]"
               fallbackClassName="text-[10px]"
             />
@@ -56,21 +57,21 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           alt="clock icon"
           value={` Asked ${getTimeStamp(new Date(createdAt))}`}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyle="small-regular text-dark400_light700"
         />
         <Metric
           imgUrl="/icons/message.svg"
           alt="message icon"
           value={` ${answers} Answeres`}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyle="small-regular text-dark400_light700"
         />
         <Metric
           imgUrl="/icons/eye.svg"
           alt="eye icon"
           value={` ${formatNumber(views)} Views`}
           title=""
-          textStyles="small-regular text-dark400_light700"
+          textStyle="small-regular text-dark400_light700"
         />
       </div>
 
@@ -80,6 +81,9 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
       </div>
+      <section className="my-5">
+        <AnswerForm questionId={question._id} />
+      </section>
     </>
   );
 };

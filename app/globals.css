@@ -55,10 +55,6 @@ body {
     @apply dark:bg-dark-400 bg-light-900 !important;
   }
 
-  .text-primary-500 {
-    @apply text-[#FC7308];
-  }
-
   .text-dark100_light900 {
     @apply text-dark-100 dark:text-light-900 !important;
   }
@@ -348,6 +344,14 @@ body {
   background: #151821 !important;
 }
 
+._contentEditable_uazmk_379 {
+  color: black;
+}
+
+.dark ._contentEditable_uazmk_379 {
+  color: white;
+}
+
 .dark .mdxeditor-toolbar button svg {
   color: #858ead !important;
 }
@@ -408,4 +412,11 @@ code {
   :root {
     --radius: 0.5rem;
   }
+}
+
+/* NESTED CODE BLOCKS: Only apply grid to visible code blocks */
+[data-bright-mode="dark"]:not(html.light [data-bright-mode="dark"]),
+[data-bright-mode="light"]:not(:not(html.light [data-bright-mode="light"])) {
+  display: grid !important; /* Apply grid only if it's visible */
+  width: 100% !important;
 }
