@@ -55,6 +55,10 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
           title: "Success",
           description: "Your answer has been posted successfully",
         });
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown(""); // Reset the editor content
+        }
       } else {
         toast({
           title: "Error",
