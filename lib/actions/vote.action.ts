@@ -1,10 +1,12 @@
 "use server";
 
+import ROUTES from "@/constants/routes";
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import Vote from "@/database/vote.model";
 import { HasVotedParams, UpdateVoteCountParams } from "@/types/action";
 import mongoose, { ClientSession } from "mongoose";
+import { revalidatePath } from "next/cache";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import {
@@ -65,7 +67,7 @@ export async function createVote(
   const { targetId, targetType, voteType } = validationResult.params!;
   const userId = validationResult.session?.user?.id;
 
-  if (!userId) handleError(new Error("Unauthorized")) as ErrorResponse;
+  if (!userId) return handleError(new Error("Unauthorized")) as ErrorResponse;
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -90,13 +92,30 @@ export async function createVote(
           { new: true, session }
         );
 
-        await updateVoteCount({ targetId, targetType, voteType, change: 1 });
+        await updateVoteCount(
+          { targetId, targetType, voteType: existingVote.voteType, change: -1 },
+          session
+        );
+        await updateVoteCount(
+          { targetId, targetType, voteType, change: 1 },
+          session
+        );
       }
     } else {
       // If the user has not voted yet, create a new vote
-      await Vote.create([{ targetId, targetType, voteType, change: 1 }], {
-        session,
-      });
+      await Vote.create(
+        [
+          {
+            author: userId,
+            actionId: targetId,
+            actionType: targetType,
+            voteType,
+          },
+        ],
+        {
+          session,
+        }
+      );
 
       await updateVoteCount(
         { targetId, targetType, voteType, change: 1 },
@@ -106,6 +125,8 @@ export async function createVote(
 
     await session.commitTransaction();
     session.endSession();
+
+    revalidatePath(ROUTES.QUESTION(targetId));
     return { success: true };
   } catch (error) {
     await session.abortTransaction();
