@@ -4,11 +4,13 @@ import TagCard from "@/components/cards/TagCard";
 import Preview from "@/components/editor/Preview";
 import AnswerForm from "@/components/forms/AnswerForm";
 import Metric from "@/components/Metric";
+import SaveQuestion from "@/components/questions/SaveQuestion";
 import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/UserAvatar";
 import Votes from "@/components/votes/Votes";
 import ROUTES from "@/constants/routes";
 import { GetAnswers } from "@/lib/actions/answer.action";
+import { hasSavedQuestion } from "@/lib/actions/collection.action";
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { hasVoted } from "@/lib/actions/vote.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
@@ -48,7 +50,19 @@ const QuestionDetails = async ({ params }: RouteParams) => {
     targetType: "question",
   });
 
+  const hasSavedQuestionPromise = hasSavedQuestion({
+    questionId: question._id,
+  });
+
   const { author, createdAt, answers, views, tags, title, content } = question;
+
+  const skeleton = (
+    <div role="status" className="space-y-2.5 animate-pulse max-w-lg">
+      <div className="flex items-center w-full">
+        <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -69,8 +83,8 @@ const QuestionDetails = async ({ params }: RouteParams) => {
               </p>
             </Link>
           </div>
-          <div className="flex justify-end gap-5">
-            <Suspense>
+          <div className="flex justify-end items-center gap-4">
+            <Suspense fallback={skeleton}>
               <Votes
                 upvotes={question.upvotes}
                 downvotes={question.downvotes}
@@ -79,7 +93,12 @@ const QuestionDetails = async ({ params }: RouteParams) => {
                 hasVotedPromise={hasVotedPromise}
               />
             </Suspense>
-
+            <Suspense fallback={skeleton}>
+              <SaveQuestion
+                questionId={question._id}
+                hasSavedQuestionPromise={hasSavedQuestionPromise}
+              />
+            </Suspense>
             {author._id === session?.user?.id && (
               <Button
                 className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900"
