@@ -3,7 +3,6 @@
 import { toast } from "@/hooks/use-toast";
 import { toggleSaveQuestion } from "@/lib/actions/collection.action";
 import { ActionResponse } from "@/types/global";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { use, useState } from "react";
 
@@ -12,27 +11,29 @@ import { use, useState } from "react";
 const SaveQuestion = ({
   questionId,
   hasSavedQuestionPromise,
+  userId,
 }: {
   questionId: string;
   hasSavedQuestionPromise: Promise<ActionResponse<{ saved: boolean }>>;
+  userId: string;
 }) => {
-  const session = useSession();
-  const userId = session.data?.user?.id;
+  //   const session = useSession();
+  //   const userId = session.data?.user?.id;
 
   const { data } = use(hasSavedQuestionPromise);
   const { saved: hasSaved } = data || {};
-
-  console.log(hasSaved);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async () => {
     if (isLoading) return;
-    if (!userId)
+
+    if (!userId) {
       return toast({
         title: "You need to logged in to save a question",
         variant: "destructive",
       });
+    }
 
     setIsLoading(true);
 

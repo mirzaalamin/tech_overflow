@@ -97,6 +97,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
               <SaveQuestion
                 questionId={question._id}
                 hasSavedQuestionPromise={hasSavedQuestionPromise}
+                userId={session?.user?.id}
               />
             </Suspense>
             {author._id === session?.user?.id && (
