@@ -10,8 +10,9 @@ import { Button } from "../ui/button";
 
 const filters = [
   { name: "Popular", value: "popular" },
-  { name: "Unanswered", value: "unanswered" },
   { name: "Newest", value: "newest" },
+  { name: "Unanswered", value: "unanswered" },
+  { name: "Recommended", value: "recommended" },
 ];
 
 const HomeFilter = () => {

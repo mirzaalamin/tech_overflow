@@ -10,67 +10,9 @@ import { EMPTY_QUESTION } from "@/constants/states";
 import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
+import CommonFilter from "@/components/filters/CommonFilter";
+import { HomePageFilters } from "@/constants/filters";
 import "../../database/index";
-
-// const questions = [
-//   {
-//     _id: "1",
-//     title: "How to learn React?",
-//     description: "I want to learn React, can anyone help me?",
-//     tags: [
-//       { _id: "1", name: "React" },
-//       { _id: "2", name: "Next js" },
-//     ],
-//     author: {
-//       _id: "1",
-//       name: "John Doe",
-//       image:
-//         "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-//     },
-//     upvotes: 23,
-//     answers: 72,
-//     views: 980,
-//     createdAt: new Date("2025-2-5"),
-//   },
-//   {
-//     _id: "2",
-//     title: "How to learn JavaScript?",
-//     description: "I want to learn JavaScript, can anyone help me?",
-//     tags: [
-//       { _id: "1", name: "JavaScript" },
-//       { _id: "2", name: "angular" },
-//     ],
-//     author: {
-//       _id: "1",
-//       name: "John Doe",
-//       image:
-//         "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-//     },
-//     upvotes: 10,
-//     answers: 5,
-//     views: 100,
-//     createdAt: new Date("2024-09-01"),
-//   },
-//   {
-//     _id: "3",
-//     title: "How to learn Redux in simple steps?",
-//     description: "I want to learn Redux toolkit, can anyone help me?",
-//     tags: [
-//       { _id: "1", name: "Redux" },
-//       { _id: "2", name: "Toolkit" },
-//     ],
-//     author: {
-//       _id: "1",
-//       name: "Mirza",
-//       image:
-//         "https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-//     },
-//     upvotes: 110,
-//     answers: 90,
-//     views: 1100,
-//     createdAt: new Date("2024-03-01"),
-//   },
-// ];
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
@@ -101,12 +43,18 @@ const Home = async ({ searchParams }: SearchParams) => {
           <Link href={ROUTES.ASK_QUESTION}>Ask a Question</Link>
         </Button>
       </section>
-      <section className="mt-11">
+      <section className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch
           route="/"
           imgSrc="/icons/search.svg"
           placeholder="Search for a Question here..."
           otherClasses=""
+        />
+
+        <CommonFilter
+          filters={HomePageFilters}
+          otherClasses="min-h-[56px] sm:min-w-[170px]"
+          containerClasses="hidden max-md:flex"
         />
       </section>
       <HomeFilter />
