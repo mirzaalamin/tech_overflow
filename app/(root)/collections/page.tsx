@@ -5,6 +5,8 @@ import DataRenderer from "@/components/DataRenderer";
 import LocalSearch from "@/components/search/LocalSearch";
 import { EMPTY_COLLECTIONS } from "@/constants/states";
 
+import CommonFilter from "@/components/filters/CommonFilter";
+import { CollectionFilters } from "@/constants/filters";
 import ROUTES from "@/constants/routes";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
 import "../../../database/index";
@@ -36,6 +38,11 @@ const Collections = async ({ searchParams }: SearchParams) => {
           imgSrc="/icons/search.svg"
           placeholder="Search for a Question here..."
           otherClasses=""
+        />
+
+        <CommonFilter
+          filters={CollectionFilters}
+          otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
 
