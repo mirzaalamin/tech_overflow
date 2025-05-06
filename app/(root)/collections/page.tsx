@@ -6,6 +6,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { EMPTY_COLLECTIONS } from "@/constants/states";
 
 import CommonFilter from "@/components/filters/CommonFilter";
+import Pagination from "@/components/Pagination";
 import { CollectionFilters } from "@/constants/filters";
 import ROUTES from "@/constants/routes";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
@@ -27,7 +28,7 @@ const Collections = async ({ searchParams }: SearchParams) => {
     filter: filter || "",
   });
 
-  const { collection } = data || {};
+  const { collection, isNext } = data || {};
 
   return (
     <>
@@ -59,6 +60,7 @@ const Collections = async ({ searchParams }: SearchParams) => {
           </section>
         )}
       />
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 };

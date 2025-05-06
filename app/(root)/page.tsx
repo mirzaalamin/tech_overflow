@@ -11,6 +11,7 @@ import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
 import CommonFilter from "@/components/filters/CommonFilter";
+import Pagination from "@/components/Pagination";
 import { HomePageFilters } from "@/constants/filters";
 import "../../database/index";
 
@@ -30,7 +31,7 @@ const Home = async ({ searchParams }: SearchParams) => {
     filter: filter || "",
   });
 
-  const { questions } = data || {};
+  const { questions, isNext } = data || {};
 
   return (
     <>
@@ -71,6 +72,7 @@ const Home = async ({ searchParams }: SearchParams) => {
           </section>
         )}
       />
+      <Pagination page={page} isNext={isNext || false} />
     </>
   );
 };
