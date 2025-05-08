@@ -8,24 +8,10 @@ import DataRenderer from "../DataRenderer";
 
 /* eslint-disable react/react-in-jsx-scope */
 const RightSidebar = async () => {
-  // const { success, data, error } = await getTags({
-  //   page: 1,
-  //   pageSize: 5,
-  //   query: "",
-  //   filter: "",
-  // });
-
-  const {
-    success: questionSuccess,
-    data: hotQuestions,
-    error: questionError,
-  } = await getHotQuestions();
-
-  const {
-    success: tagsSuccess,
-    data: tags,
-    error: tagsError,
-  } = await getTopTags();
+  const [
+    { success: questionSuccess, data: hotQuestions, error: questionError },
+    { success: tagsSuccess, data: tags, error: tagsError },
+  ] = await Promise.all([getHotQuestions(), getTopTags()]);
 
   return (
     <section className="pt-36 custom-scrollbar flex flex-col background-light900_dark200 light-border border-l sticky right-0 top-0 p-6 h-screen w-[350px] gap-6 overflow-y-auto shadow-light300 dark:shadow-none max-lg:hidden">
