@@ -55,12 +55,12 @@ const Profile = async ({ params }: RouteParams) => {
                 <ProfileLink
                   imgUrl="/icons/link.svg"
                   href={portfolio}
-                  title="Portfolio"
+                  title={portfolio}
                 />
               )}
 
               {location && (
-                <ProfileLink imgUrl="/icons/location.svg" title="Location" />
+                <ProfileLink imgUrl="/icons/location.svg" title={location} />
               )}
 
               <ProfileLink
