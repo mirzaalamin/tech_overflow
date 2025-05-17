@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/hooks/use-toast";
+import { deleteQuestion } from "@/lib/actions/question.action";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -23,22 +24,24 @@ interface Props {
 /* eslint-disable react/react-in-jsx-scope */
 const EditDeleteAction = ({ type, itemId }: Props) => {
   const router = useRouter();
+
   const handleEdit = async () => {
     router.push(`/questions/${itemId}/edit`);
   };
 
   const handleDelete = async () => {
     if (type === "Question") {
-      // Call API to delete the Question
+      await deleteQuestion({ questionId: itemId });
 
       toast({
         title: "Question Deleted",
+        variant: "destructive",
         description: "Your question has been deleted successfully",
       });
     } else if (type === "Answer") {
-      // Call API to delete the Answer
       toast({
         title: "Answer Deleted",
+        variant: "destructive",
         description: "Your answer has been deleted successfully",
       });
     }

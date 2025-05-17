@@ -5,7 +5,6 @@ import Preview from "@/components/editor/Preview";
 import AnswerForm from "@/components/forms/AnswerForm";
 import Metric from "@/components/Metric";
 import SaveQuestion from "@/components/questions/SaveQuestion";
-import { Button } from "@/components/ui/button";
 import UserAvatar from "@/components/UserAvatar";
 import Votes from "@/components/votes/Votes";
 import ROUTES from "@/constants/routes";
@@ -101,16 +100,6 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
                 userId={session?.user?.id}
               />
             </Suspense>
-            {author._id === session?.user?.id && (
-              <Button
-                className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900"
-                asChild
-              >
-                <Link href={ROUTES.EDIT_QUESTION(question._id)}>
-                  Edit Question
-                </Link>
-              </Button>
-            )}
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full">
