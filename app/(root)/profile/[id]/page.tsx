@@ -14,6 +14,7 @@ import {
   getUser,
   getUserAnswers,
   getUserQuestions,
+  getUserStats,
   getUserTopTags,
 } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types/global";
@@ -69,6 +70,8 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
   } = await getUserTopTags({
     userId: id,
   });
+
+  const { data: userStats } = await getUserStats({ userId: id });
 
   const { questions, isNext: hasMoreQuestions } = userQuestions!;
   const { answers, isNext: hasMoreAnswers } = userAnswers!;
@@ -129,7 +132,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
           )}
         </div>
       </section>
-      <Stats
+      {/* <Stats
         totalQuestions={totalQuestions}
         totalAnswers={totalAnswers}
         badges={{
@@ -137,6 +140,14 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
           SILVER: 0,
           BRONZE: 0,
         }}
+        reputationPoints={user.reputation || 0}
+      /> */}
+
+      <Stats
+        totalQuestions={totalQuestions || 0}
+        totalAnswers={totalAnswers || 0}
+        badges={userStats?.badges || { GOLD: 0, SILVER: 0, BRONZE: 0 }}
+        reputationPoints={user.reputation || 0}
       />
       <section className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-[2]">
