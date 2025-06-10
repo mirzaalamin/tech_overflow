@@ -19,7 +19,7 @@ const Navbar = async () => {
           alt="Tech Overflow logo"
         />
         <p className="h2-bold font-space-grotesk text-dark-100 dark:text-light-900 max-sm:hidden">
-          Tech<span className="text-primary-500">Overflow</span>
+          Tech<span className="text-primary-100">Overflow</span>
         </p>
       </Link>
 
