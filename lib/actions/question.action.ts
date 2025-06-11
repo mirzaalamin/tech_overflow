@@ -19,6 +19,7 @@ import {
 } from "@/types/global";
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
+import { cache } from "react";
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import dbConnect from "../mongoose";
@@ -305,7 +306,7 @@ export async function getRecommendedQuestions({
   };
 }
 
-export async function getQuestions(
+export const getQuestions = cache(async function (
   params: PaginatedSearchParams
 ): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
   const validationResult = await action({
@@ -389,7 +390,7 @@ export async function getQuestions(
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
-}
+});
 
 export async function incrementViews(
   params: IncrementViewsParams
